@@ -1,9 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+
+:root {
+  --font-family: 'Lato', sans-serif;
+  font-family: var(--font-family);
+  color: #edf4ed;
+  background: #0b1110;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --ink: #0b1110;
+  --ink-soft: #121b19;
+  --panel: rgba(22, 32, 29, 0.88);
+  --line: rgba(214, 241, 213, 0.12);
+  --muted: #91a59b;
+  --lime: #b8f36b;
+  --aqua: #7de1c2;
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-family);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(184, 243, 107, 0.13), transparent 31rem),
+    radial-gradient(circle at 94% 20%, rgba(125, 225, 194, 0.1), transparent 28rem),
+    #0b1110;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  content: '';
+  mask-image: linear-gradient(to bottom, black, transparent 80%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+.MuiTypography-root {
+  font-family: var(--font-family) !important;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.dashboard-intro {
+  animation: rise-in 650ms ease both;
+}
+
+.dashboard-kicker {
+  margin-bottom: 14px;
+  color: var(--lime);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.dashboard-title,
+.profile-name,
+.empty-state h5 {
+  color: #f2f7ef;
+  font-family: var(--font-family);
+  letter-spacing: -0.03em;
+}
+
+.dashboard-title {
+  font-size: clamp(2.5rem, 6vw, 4.7rem) !important;
+  line-height: 0.98 !important;
+}
+
+.dashboard-subtitle {
+  max-width: 34rem;
+  margin: 18px auto 0;
+  color: var(--muted) !important;
+  font-size: 1rem !important;
+}
+
+.search-panel,
+.profile-hero,
+.stat-card {
+  border: 1px solid var(--line);
+  background: var(--panel) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(18px);
+}
+
+.search-panel {
+  border-color: rgba(184, 243, 107, 0.2);
+  background: linear-gradient(110deg, rgba(30, 48, 39, 0.96), rgba(18, 29, 26, 0.96)) !important;
+  animation: rise-in 700ms 100ms ease both;
+}
+
+.search-panel .MuiInputLabel-root {
+  color: var(--muted);
+}
+
+.search-panel .MuiOutlinedInput-root {
+  color: #f2f7ef;
+  background: rgba(5, 11, 9, 0.25);
+}
+
+.search-panel .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(214, 241, 213, 0.18);
+}
+
+.search-panel .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+.search-panel .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--lime);
+}
+
+.search-panel .MuiInputLabel-root.Mui-focused {
+  color: var(--lime);
+}
+
+.analyze-button {
+  min-width: 168px;
+  border-radius: 10px !important;
+  background: var(--lime) !important;
+  color: #112016 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 24px rgba(184, 243, 107, 0.2) !important;
+  transition: transform 180ms ease, box-shadow 180ms ease !important;
+}
+
+.analyze-button:hover {
+  background: #d1ff93 !important;
+  box-shadow: 0 12px 30px rgba(184, 243, 107, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+.results-area {
+  animation: rise-in 700ms 180ms ease both;
+}
+
+.profile-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-hero::before {
+  position: absolute;
+  top: -7rem;
+  right: -4rem;
+  width: 19rem;
+  height: 19rem;
+  border: 1px solid rgba(184, 243, 107, 0.16);
+  border-radius: 50%;
+  content: '';
+}
+
+.profile-avatar {
+  border: 3px solid rgba(184, 243, 107, 0.75);
+  box-shadow: 0 0 0 7px rgba(184, 243, 107, 0.08), 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.profile-copy {
+  min-width: 0;
+}
+
+.profile-name {
+  margin-bottom: 5px !important;
+  font-size: 1.7rem !important;
+}
+
+.profile-meta {
+  color: var(--muted) !important;
+}
+
+.profile-meta .MuiTypography-root {
+  color: inherit;
+  font-size: 0.88rem;
+}
+
+.profile-copy > .MuiTypography-root:last-child {
+  max-width: 54rem;
+  color: #b7c7bd;
+  line-height: 1.6;
+}
+
+.stat-card {
+  height: 100%;
+  border-radius: 14px !important;
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(184, 243, 107, 0.45);
+  background: rgba(31, 48, 40, 0.96) !important;
+  transform: translateY(-4px);
+}
+
+.stat-card .MuiCardContent-root {
+  padding: 22px;
+}
+
+.stat-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.stat-card-top .MuiTypography-root {
+  color: var(--muted) !important;
+  font-size: 0.83rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat-card .MuiTypography-h4 {
+  color: #f2f7ef;
+  font-family: var(--font-family);
+}
+
+.stat-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(184, 243, 107, 0.12);
+  color: var(--lime);
+}
+
+.stat-icon svg {
+  font-size: 19px;
+}
+
+.empty-state {
+  padding: 5rem 1rem;
+  border: 1px dashed rgba(184, 243, 107, 0.28);
+  border-radius: 18px;
+  background: rgba(18, 29, 26, 0.5);
+  text-align: center;
+}
+
+.empty-state h5 {
+  margin-bottom: 8px;
+}
+
+.empty-state .MuiTypography-body1 {
+  color: var(--muted) !important;
+}
+
+.empty-state-mark {
+  margin-bottom: 18px !important;
+  color: var(--lime);
+  font-family: var(--font-family);
+  font-size: 4rem !important;
+  font-weight: 700 !important;
+  line-height: 0.8 !important;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .search-panel {
+    flex-direction: column;
   }
-  
-  body {
-    font-family: Arial, sans-serif;
+
+  .analyze-button {
+    width: 100%;
+    min-height: 50px;
   }
+
+  .profile-hero > .MuiBox-root {
+    align-items: flex-start;
+  }
+
+  .profile-avatar {
+    width: 68px !important;
+    height: 68px !important;
+  }
+
+  .profile-meta {
+    gap: 1rem !important;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+}

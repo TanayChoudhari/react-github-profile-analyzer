@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { useRef, useState } from 'react'
 import { getGithubProfile } from '../services/githubApi'
 import ProfileHeader from '../components/ProfileHeader';
+import ProfileStats from '../components/ProfileStats';
   
 export default function Dashboard() {
 	const usernameRef = useRef();
@@ -35,11 +36,15 @@ export default function Dashboard() {
 	}
 
     return (
-      <Box sx={{ py: 6 }}>
+      <Box className="dashboard" sx={{ py: { xs: 4, md: 7 } }}>
   
         {/* Header */}
-        <Box sx={{ textAlign: 'center', mb: 5 }}>
+        <Box className="dashboard-intro" sx={{ textAlign: 'center', mb: { xs: 4, md: 5 } }}>
+          <Typography className="dashboard-kicker">
+            OPEN SOURCE / PROFILE INTELLIGENCE
+          </Typography>
           <Typography
+            className="dashboard-title"
             variant="h3"
             component="h1"
             fontWeight={700}
@@ -48,23 +53,25 @@ export default function Dashboard() {
             GitHub Profile Analyzer
           </Typography>
   
-          <Typography
+          {/* <Typography
+            className="dashboard-subtitle"
             variant="h6"
             color="text.secondary"
           >
             Analyze GitHub profiles, repositories and contributions
-          </Typography>
+          </Typography> */}
         </Box>
   
   
         {/* Search */}
         <Paper
-          elevation={3}
+          className="search-panel"
+          elevation={0}
           sx={{
-            p: 2,
+            p: { xs: 1.5, sm: 2 },
             display: 'flex',
             gap: 2,
-            maxWidth: 700,
+            maxWidth: 760,
             mx: 'auto',
             mb: 5,
           }}
@@ -72,40 +79,43 @@ export default function Dashboard() {
           <TextField
             fullWidth
             label="GitHub Username"
-			inputRef={usernameRef}
+			      inputRef={usernameRef}
             placeholder="e.g. octocat"
           />
   
           <Button
+            className="analyze-button"
             variant="contained"
             startIcon={<SearchIcon />}
             sx={{ px: 4 }}
-			onClick={handleAnalyze}
+			      onClick={handleAnalyze}
+            disabled={loading}
           >
-            Analyze
+            {loading ? 'Analyzing...' : 'Analyze profile'}
           </Button>
   
         </Paper>
   
   
         {/* Profile */}
-        <Paper
-          elevation={2}
-          sx={{ p: 4 }}
-        >
-  
-          <Typography variant="h5" fontWeight={600}>
-            GitHub Profile
-          </Typography>
-  
-          <Typography color="text.secondary">
-            Search for a username to see profile information.
-          </Typography>
+        <Box className="results-area">
+          {profile ? (
+            <Box sx={{ mb: 3 }}>
+              <ProfileHeader profile={profile} />
+              <ProfileStats profile={profile} />
+            </Box>
 
-
-		  <ProfileHeader profile={profile} />
-  
-        </Paper>
+          ) : (
+            <Box className="empty-state">
+              <Typography className="empty-state-mark">@</Typography>
+              <Typography variant="h5">Your next profile starts here</Typography>
+              <Typography color="text.secondary">
+                Search a GitHub username to surface the essentials.
+              </Typography>
+            </Box>
+          )}
+		      
+        </Box>
   
       </Box>
     )
