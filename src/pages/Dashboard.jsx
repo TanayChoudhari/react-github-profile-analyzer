@@ -1,10 +1,10 @@
 import {
-    Box,
-    Typography,
-    TextField,
-    Button,
-    Paper,
-  } from '@mui/material'
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+} from '@mui/material'
   
 import SearchIcon from '@mui/icons-material/Search'
 
@@ -52,14 +52,6 @@ export default function Dashboard() {
           >
             GitHub Profile Analyzer
           </Typography>
-  
-          {/* <Typography
-            className="dashboard-subtitle"
-            variant="h6"
-            color="text.secondary"
-          >
-            Analyze GitHub profiles, repositories and contributions
-          </Typography> */}
         </Box>
   
   

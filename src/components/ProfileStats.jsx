@@ -14,7 +14,7 @@ export default function ProfileStats ({profile}) {
   const stats = [
     { label: 'Followers', value: profile.followers, icon: <GroupOutlinedIcon /> },
     { label: 'Following', value: profile.following, icon: <PersonAddAltOutlinedIcon /> },
-    { label: 'Repositories', value: profile.public_repos, icon: <CodeOutlinedIcon /> },
+    { label: 'Total Repos', value: profile.public_repos, icon: <CodeOutlinedIcon /> },
   ]
 
   return (
