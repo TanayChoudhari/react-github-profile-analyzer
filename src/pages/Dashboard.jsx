@@ -4,24 +4,27 @@ import {
   TextField,
   Button,
   Paper,
+  Alert,
 } from '@mui/material'
   
 import SearchIcon from '@mui/icons-material/Search'
 
 import { useRef, useState } from 'react'
-import { getGithubProfile } from '../services/githubApi'
+import { getGithubProfile } from '../services/getUserDetailByUsername.service'
 import ProfileHeader from '../components/ProfileHeader';
 import ProfileStats from '../components/ProfileStats';
   
 export default function Dashboard() {
 	const usernameRef = useRef();
 	const [profile, setProfile] = useState(null)
+  const [error, setError] = useState('')
 	const [loading, setLoading] = useState(false)
 
 	const handleAnalyze = async () => {
 		try {
 			const username = usernameRef.current.value;
 			if(username){
+        setError('')
 				setLoading(true)
 			  const data = await getGithubProfile(username)
 				setProfile(data)
@@ -29,6 +32,8 @@ export default function Dashboard() {
 		}
 		catch (error){
 			console.error(error)
+      setProfile(null)
+      setError(error.message)
 		}
 		finally{
 			setLoading(false)
@@ -87,6 +92,12 @@ export default function Dashboard() {
           </Button>
   
         </Paper>
+
+        {error && (
+          <Alert severity="error" sx={{ maxWidth: 760, mx: 'auto', mb: 5 }}>
+            {error}
+          </Alert>
+        )}
   
   
         {/* Profile */}

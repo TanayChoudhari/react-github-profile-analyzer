@@ -1,3 +1,27 @@
 .app {
     min-height: 100vh;
   }
+
+.app-footer {
+  margin: 24px 0 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.app-footer-copy {
+  display: inline-flex !important;
+  align-items: center;
+  color: var(--muted) !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.copyright-symbol {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+  font-size: 0.9rem;
+  line-height: 1;
+}
