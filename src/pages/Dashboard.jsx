@@ -50,7 +50,7 @@ export default function Dashboard() {
             fontWeight={700}
             gutterBottom
           >
-            GitHub Profile Analyzer
+            GitHub Profile Evaluator
           </Typography>
         </Box>
   
@@ -83,7 +83,7 @@ export default function Dashboard() {
 			      onClick={handleAnalyze}
             disabled={loading}
           >
-            {loading ? 'Analyzing...' : 'Analyze profile'}
+            {loading ? 'Evaluating...' : 'Evaluate profile'}
           </Button>
   
         </Paper>
