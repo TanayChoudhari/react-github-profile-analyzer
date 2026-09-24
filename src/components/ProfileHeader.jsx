@@ -34,21 +34,7 @@ export default function ProfileHeader({ profile, score }) {
 				/>
 	
 				<Box className="profile-copy">
-					<Box className="profile-heading-row">
 					<Typography className="profile-name" variant="h5" fontWeight={700}>{name}</Typography>
-						<Box className="profile-score" aria-label={`Profile score ${score} out of 100`}>
-							<CircularProgress
-								variant="determinate"
-								value={score}
-								size={58}
-								thickness={4}
-							/>
-							<Box className="profile-score-value">
-								<strong>{score}</strong>
-								<span>/100</span>
-							</Box>
-						</Box>
-					</Box>
 		
 					<Box
 						className="profile-meta"
@@ -75,6 +61,21 @@ export default function ProfileHeader({ profile, score }) {
 					</Box>
 		
 					<Typography sx={{ mt: 1 }}>{bio}</Typography>
+				</Box>
+				<Box className="profile-score-panel" aria-label={`Profile score ${score} out of 100`}>
+					<Typography className="profile-score-label">Profile score</Typography>
+					<Box className="profile-score" aria-hidden="true">
+						<CircularProgress
+							variant="determinate"
+							value={score}
+							size={68}
+							thickness={4}
+						/>
+						<Box className="profile-score-value">
+							<strong>{score}</strong>
+							<span>/100</span>
+						</Box>
+					</Box>
 				</Box>
 			</Box>
 		</Paper>

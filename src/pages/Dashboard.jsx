@@ -146,15 +146,17 @@ export default function Dashboard() {
                   })}
                 />
               </Box>
-              <ProfileStats
-                profile={profile}
-                starredRepositories={starredRepositories}
-                loading={loading}
-              />
-              <Box id="repositories">
+              <Box className="dashboard-module dashboard-module-stats">
+                <ProfileStats
+                  profile={profile}
+                  starredRepositories={starredRepositories}
+                  loading={loading}
+                />
+              </Box>
+              <Box id="repositories" className="dashboard-module dashboard-module-repositories">
                 <RepositoryGrid repositories={repositories} loading={loading} />
               </Box>
-              <Box id="languages">
+              <Box id="languages" className="dashboard-module dashboard-module-languages">
                 <LanguageStats languageCount={languageCount} loading={loading} />
               </Box>
             </Box>
