@@ -1,5 +1,5 @@
-import { API_URL } from '../constants/api.constants'
 import { getGithubRepositories } from './getGithubRepositories.service'
+import { githubApiFetch } from './githubApi.service'
 
 export async function getLanguageCount(username, repositoryList = null) {
   const repositories = repositoryList || await getGithubRepositories(username)
@@ -7,13 +7,12 @@ export async function getLanguageCount(username, repositoryList = null) {
 
   const languageResponses = await Promise.all(
     repositories.map(async (repo) => {
-      const response = await fetch(
-        `${API_URL}/repos/${repo.owner.login}/${repo.name}/languages`
-      )
-
-      if (!response.ok) return {}
-
-      return response.json()
+      try {
+        return await githubApiFetch(`/repos/${repo.owner.login}/${repo.name}/languages`)
+      } catch (error) {
+        if (error.message.includes('rate limit exceeded')) throw error
+        return {}
+      }
     })
   )
 

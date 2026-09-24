@@ -8,46 +8,54 @@ import {
 } from '@mui/material'
   
 import SearchIcon from '@mui/icons-material/Search'
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 
 import { useRef, useState } from 'react'
 import { getGithubProfile } from '../services/getGithubProfile.service'
 import { getGithubRepositories } from '../services/getGithubRepositories.service'
 import { getLanguageCount } from '../services/getLanguageCount.service'
+import { getStarredRepositories } from '../services/getStarredRepositories.service'
 import ProfileHeader from '../components/ProfileHeader';
 import ProfileStats from '../components/ProfileStats';
 import RepositoryGrid from '../components/RepositoryGrid';
 import LanguageStats from '../components/LanguageStats';
   
-export default function Dashboard({ theme, onToggleTheme }) {
+export default function Dashboard() {
 	const usernameRef = useRef();
 	const [profile, setProfile] = useState(null)
   const [repositories, setRepositories] = useState([])
+  const [starredRepositories, setStarredRepositories] = useState([])
   const [languageCount, setLanguageCount] = useState({})
   const [error, setError] = useState('')
 	const [loading, setLoading] = useState(false)
 
-	const handleAnalyze = async () => {
+  const handleAnalyze = async (event) => {
+    event?.preventDefault()
+    const username = usernameRef.current?.value.trim()
+
+    if (!username) {
+      setError('Please enter a GitHub username')
+      return
+    }
+
 		try {
-			const username = usernameRef.current.value;
-			if(username){
-        setError('')
+      setError('')
 				setLoading(true)
-        const [profileData, repositoryData] = await Promise.all([
+      const [profileData, repositoryData] = await Promise.all([
             getGithubProfile(username),
             getGithubRepositories(username),
           ])
-        const languageData = await getLanguageCount(username, repositoryData)
-        setProfile(profileData)
-        setRepositories(repositoryData)
-        setLanguageCount(languageData)
-			}
+      const starredRepositoryData = await getStarredRepositories(username)
+      const languageData = await getLanguageCount(username, repositoryData)
+      setProfile(profileData)
+      setRepositories(repositoryData)
+      setStarredRepositories(starredRepositoryData)
+      setLanguageCount(languageData)
 		}
 		catch (error){
 			console.error(error)
       setProfile(null)
       setRepositories([])
+      setStarredRepositories([])
       setLanguageCount({})
       setError(error.message)
 		}
@@ -61,15 +69,6 @@ export default function Dashboard({ theme, onToggleTheme }) {
   
         {/* Header */}
         <Box className="dashboard-intro" sx={{ textAlign: 'center', mb: { xs: 4, md: 5 } }}>
-          <Button
-            className="theme-toggle"
-            variant="outlined"
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            onClick={onToggleTheme}
-          >
-            {theme === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
-          </Button>
           <Typography className="dashboard-kicker">
             OPEN SOURCE / PROFILE INTELLIGENCE
           </Typography>
@@ -80,7 +79,10 @@ export default function Dashboard({ theme, onToggleTheme }) {
             fontWeight={700}
             gutterBottom
           >
-            GitHub Profile Evaluator
+            Find your open-source footprint
+          </Typography>
+          <Typography className="dashboard-subtitle">
+            Explore a developer profile, the projects they have built, and the languages behind their work.
           </Typography>
         </Box>
   
@@ -88,6 +90,8 @@ export default function Dashboard({ theme, onToggleTheme }) {
         {/* Search */}
         <Paper
           className="search-panel"
+          component="form"
+          onSubmit={handleAnalyze}
           elevation={0}
           sx={{
             p: { xs: 1.5, sm: 2 },
@@ -99,6 +103,7 @@ export default function Dashboard({ theme, onToggleTheme }) {
           }}
         >
           <TextField
+            className="search-field"
             fullWidth
             label="GitHub Username"
 			      inputRef={usernameRef}
@@ -110,7 +115,7 @@ export default function Dashboard({ theme, onToggleTheme }) {
             variant="contained"
             startIcon={<SearchIcon />}
             sx={{ px: 4 }}
-			      onClick={handleAnalyze}
+            type="submit"
             disabled={loading}
           >
             {loading ? 'Evaluating...' : 'Evaluate profile'}
@@ -129,10 +134,20 @@ export default function Dashboard({ theme, onToggleTheme }) {
         <Box className="results-area">
           {profile ? (
             <Box sx={{ mb: 3 }}>
-              <ProfileHeader profile={profile} />
-              <ProfileStats profile={profile} />
-              <RepositoryGrid repositories={repositories} loading={loading} />
-              <LanguageStats languageCount={languageCount} loading={loading} />
+              <Box id="profile">
+                <ProfileHeader profile={profile} />
+              </Box>
+              <ProfileStats
+                profile={profile}
+                starredRepositories={starredRepositories}
+                loading={loading}
+              />
+              <Box id="repositories">
+                <RepositoryGrid repositories={repositories} loading={loading} />
+              </Box>
+              <Box id="languages">
+                <LanguageStats languageCount={languageCount} loading={loading} />
+              </Box>
             </Box>
 
           ) : (
