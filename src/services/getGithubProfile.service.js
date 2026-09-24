@@ -1,4 +1,4 @@
-const API_URL = 'https://api.github.com'
+import { API_URL } from '../constants/api.constants'
 
 export async function getGithubProfile(username) {
   const response = await fetch(

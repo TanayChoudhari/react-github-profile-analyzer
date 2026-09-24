@@ -8,15 +8,23 @@ import {
 } from '@mui/material'
   
 import SearchIcon from '@mui/icons-material/Search'
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 
 import { useRef, useState } from 'react'
-import { getGithubProfile } from '../services/getUserDetailByUsername.service'
+import { getGithubProfile } from '../services/getGithubProfile.service'
+import { getGithubRepositories } from '../services/getGithubRepositories.service'
+import { getLanguageCount } from '../services/getLanguageCount.service'
 import ProfileHeader from '../components/ProfileHeader';
 import ProfileStats from '../components/ProfileStats';
+import RepositoryGrid from '../components/RepositoryGrid';
+import LanguageStats from '../components/LanguageStats';
   
-export default function Dashboard() {
+export default function Dashboard({ theme, onToggleTheme }) {
 	const usernameRef = useRef();
 	const [profile, setProfile] = useState(null)
+  const [repositories, setRepositories] = useState([])
+  const [languageCount, setLanguageCount] = useState({})
   const [error, setError] = useState('')
 	const [loading, setLoading] = useState(false)
 
@@ -26,13 +34,21 @@ export default function Dashboard() {
 			if(username){
         setError('')
 				setLoading(true)
-			  const data = await getGithubProfile(username)
-				setProfile(data)
+        const [profileData, repositoryData] = await Promise.all([
+            getGithubProfile(username),
+            getGithubRepositories(username),
+          ])
+        const languageData = await getLanguageCount(username, repositoryData)
+        setProfile(profileData)
+        setRepositories(repositoryData)
+        setLanguageCount(languageData)
 			}
 		}
 		catch (error){
 			console.error(error)
       setProfile(null)
+      setRepositories([])
+      setLanguageCount({})
       setError(error.message)
 		}
 		finally{
@@ -45,6 +61,15 @@ export default function Dashboard() {
   
         {/* Header */}
         <Box className="dashboard-intro" sx={{ textAlign: 'center', mb: { xs: 4, md: 5 } }}>
+          <Button
+            className="theme-toggle"
+            variant="outlined"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            onClick={onToggleTheme}
+          >
+            {theme === 'dark' ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+          </Button>
           <Typography className="dashboard-kicker">
             OPEN SOURCE / PROFILE INTELLIGENCE
           </Typography>
@@ -106,6 +131,8 @@ export default function Dashboard() {
             <Box sx={{ mb: 3 }}>
               <ProfileHeader profile={profile} />
               <ProfileStats profile={profile} />
+              <RepositoryGrid repositories={repositories} loading={loading} />
+              <LanguageStats languageCount={languageCount} loading={loading} />
             </Box>
 
           ) : (
