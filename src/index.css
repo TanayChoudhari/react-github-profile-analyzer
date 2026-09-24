@@ -79,7 +79,14 @@ a { color: inherit; }
 .profile-hero::before { position: absolute; top: -100px; right: -50px; width: 220px; height: 220px; border: 1px solid rgba(255, 56, 92, 0.15); border-radius: 50%; content: ''; }
 .profile-avatar { border: 3px solid var(--canvas); box-shadow: 0 0 0 1px var(--hairline), var(--shadow); }
 .profile-copy { min-width: 0; }
+.profile-heading-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .profile-name { margin-bottom: 5px !important; color: var(--ink); font-size: 1.5rem !important; font-weight: 700 !important; letter-spacing: -0.04em; }
+.profile-score { position: relative; display: grid; width: 58px; height: 58px; flex-shrink: 0; place-items: center; color: var(--primary); }
+.profile-score .MuiCircularProgress-circle { stroke: currentColor; }
+.profile-score::before { position: absolute; width: 46px; height: 46px; border: 1px solid var(--hairline); border-radius: 50%; content: ''; }
+.profile-score-value { position: absolute; display: flex; align-items: baseline; color: var(--ink); line-height: 1; }
+.profile-score-value strong { font-size: 1rem; font-weight: 700; }
+.profile-score-value span { margin-left: 1px; color: var(--muted); font-size: 0.52rem; }
 .profile-meta { color: var(--muted) !important; }
 .profile-meta .MuiTypography-root { color: inherit; font-size: 0.82rem; }
 .profile-copy > .MuiTypography-root:last-child { max-width: 54rem; color: var(--body); font-size: 0.92rem; line-height: 1.6; }
@@ -172,6 +179,7 @@ a { color: inherit; }
   .search-field .MuiOutlinedInput-root { padding-left: 16px; }
   .analyze-button { width: 100%; }
   .profile-hero > .MuiBox-root { align-items: flex-start; }
+  .profile-heading-row { align-items: flex-start; }
   .profile-meta { gap: 1rem !important; overflow-x: auto; padding-bottom: 4px; }
   .repositories-heading, .languages-heading { align-items: flex-start; flex-direction: column; gap: 4px; }
   .language-row-heading { align-items: flex-start; flex-direction: column; gap: 4px; }

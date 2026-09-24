@@ -18,6 +18,7 @@ import ProfileHeader from '../components/ProfileHeader';
 import ProfileStats from '../components/ProfileStats';
 import RepositoryGrid from '../components/RepositoryGrid';
 import LanguageStats from '../components/LanguageStats';
+import { calculateProfileScore } from '../utils/profileScore.utils'
   
 export default function Dashboard() {
 	const usernameRef = useRef();
@@ -135,7 +136,15 @@ export default function Dashboard() {
           {profile ? (
             <Box sx={{ mb: 3 }}>
               <Box id="profile">
-                <ProfileHeader profile={profile} />
+                <ProfileHeader
+                  profile={profile}
+                  score={calculateProfileScore({
+                    profile,
+                    repositories,
+                    starredRepositories,
+                    languageCount,
+                  })}
+                />
               </Box>
               <ProfileStats
                 profile={profile}

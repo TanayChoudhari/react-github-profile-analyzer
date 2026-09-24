@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Paper,
+	CircularProgress,
   Typography,
 } from '@mui/material'
 
@@ -10,7 +11,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import { getYearFromDate } from '../utils/global.utils';
   
-export default function ProfileHeader({ profile }) {
+export default function ProfileHeader({ profile, score }) {
   const { name, login, location, created_at, bio, avatar_url } = profile
 	
   return (
@@ -33,7 +34,21 @@ export default function ProfileHeader({ profile }) {
 				/>
 	
 				<Box className="profile-copy">
+					<Box className="profile-heading-row">
 					<Typography className="profile-name" variant="h5" fontWeight={700}>{name}</Typography>
+						<Box className="profile-score" aria-label={`Profile score ${score} out of 100`}>
+							<CircularProgress
+								variant="determinate"
+								value={score}
+								size={58}
+								thickness={4}
+							/>
+							<Box className="profile-score-value">
+								<strong>{score}</strong>
+								<span>/100</span>
+							</Box>
+						</Box>
+					</Box>
 		
 					<Box
 						className="profile-meta"
