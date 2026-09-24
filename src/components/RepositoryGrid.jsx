@@ -12,6 +12,28 @@ import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined'
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined'
 import ForkRightOutlinedIcon from '@mui/icons-material/ForkRightOutlined'
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined'
+import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined'
+
+function formatRelativeUpdateDate(updatedAt) {
+	if (!updatedAt) return 'Update date unavailable'
+
+	const elapsedDays = Math.floor((Date.now() - new Date(updatedAt).getTime()) / 86400000)
+
+	if (elapsedDays <= 0) return 'Updated today'
+	if (elapsedDays === 1) return 'Updated yesterday'
+	if (elapsedDays < 7) return `Updated ${elapsedDays} days ago`
+	if (elapsedDays < 30) {
+		const weeks = Math.floor(elapsedDays / 7)
+		return `Updated ${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`
+	}
+	if (elapsedDays < 365) {
+		const months = Math.floor(elapsedDays / 30)
+		return `Updated ${months} ${months === 1 ? 'month' : 'months'} ago`
+	}
+
+	const years = Math.floor(elapsedDays / 365)
+	return `Updated ${years} ${years === 1 ? 'year' : 'years'} ago`
+}
 
 export default function RepositoryGrid({ repositories, loading }) {
 	return (
@@ -61,6 +83,10 @@ export default function RepositoryGrid({ repositories, loading }) {
 					</Typography>
 					<Typography className="repository-description">
 					{repository.description || 'No description provided.'}
+					</Typography>
+					<Typography className="repository-updated">
+						<UpdateOutlinedIcon />
+						{formatRelativeUpdateDate(repository.updated_at)}
 					</Typography>
 					<Box className="repository-meta">
 					{repository.language && (

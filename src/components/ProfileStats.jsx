@@ -12,9 +12,10 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined'
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined'
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined'
-import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined'
-import InterestsOutlinedIcon from '@mui/icons-material/InterestsOutlined'
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined'
+import DataObjectOutlinedIcon from '@mui/icons-material/DataObjectOutlined'
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined'
+import WhatshotOutlinedIcon from '@mui/icons-material/WhatshotOutlined'
 
 function getStarredInsights(starredRepositories) {
   const technologies = new Set()
@@ -61,11 +62,15 @@ export default function ProfileStats ({ profile, starredRepositories, loading })
 
       <Grid className="starred-insights" container spacing={2}>
         <Grid size={{ xs: 12, md: 4 }}>
-          <Card className="insight-card" elevation={0}>
+          <Card className="insight-card insight-card-technologies" elevation={0}>
             <CardContent>
               <Box className="insight-heading">
-                <AutoAwesomeOutlinedIcon />
-                <Typography variant="h6">Technologies</Typography>
+                <Box className="insight-icon insight-icon-technologies"><DataObjectOutlinedIcon /></Box>
+                <Box>
+                  <Typography className="insight-eyebrow">Stack signal</Typography>
+                  <Typography variant="h6">Top technologies</Typography>
+                </Box>
+                <Typography className="insight-total">{technologies.length}</Typography>
               </Box>
               {loading ? <Typography className="insight-muted">Loading starred work...</Typography> : (
                 <Box className="insight-chips">
@@ -77,11 +82,15 @@ export default function ProfileStats ({ profile, starredRepositories, loading })
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <Card className="insight-card" elevation={0}>
+          <Card className="insight-card insight-card-interests" elevation={0}>
             <CardContent>
               <Box className="insight-heading">
-                <InterestsOutlinedIcon />
-                <Typography variant="h6">Interests</Typography>
+                <Box className="insight-icon insight-icon-interests"><LocalOfferOutlinedIcon /></Box>
+                <Box>
+                  <Typography className="insight-eyebrow">Signal map</Typography>
+                  <Typography variant="h6">Interests</Typography>
+                </Box>
+                <Typography className="insight-total">{interests.length}</Typography>
               </Box>
               {loading ? <Typography className="insight-muted">Reading interests...</Typography> : (
                 <Box className="insight-chips">
@@ -93,11 +102,15 @@ export default function ProfileStats ({ profile, starredRepositories, loading })
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <Card className="insight-card" elevation={0}>
+          <Card className="insight-card insight-card-recent" elevation={0}>
             <CardContent>
               <Box className="insight-heading">
-                <StarBorderOutlinedIcon />
-                <Typography variant="h6">Recently starred</Typography>
+                <Box className="insight-icon insight-icon-recent"><WhatshotOutlinedIcon /></Box>
+                <Box>
+                  <Typography className="insight-eyebrow">Curiosity trail</Typography>
+                  <Typography variant="h6">Recently starred</Typography>
+                </Box>
+                <Typography className="insight-total">{recentProjects.length}</Typography>
               </Box>
               {loading ? <Typography className="insight-muted">Loading projects...</Typography> : (
                 <Box className="recent-projects">

@@ -95,8 +95,9 @@ a { color: inherit; }
 
 .dashboard-module { animation: module-in 550ms ease both; }
 .dashboard-module-stats { animation-delay: 180ms; }
-.dashboard-module-repositories { animation-delay: 300ms; }
-.dashboard-module-languages { animation-delay: 420ms; }
+.dashboard-module-recommendations { animation-delay: 300ms; }
+.dashboard-module-repositories { animation-delay: 420ms; }
+.dashboard-module-languages { animation-delay: 540ms; }
 
 .stat-card, .repository-card { border-radius: 14px !important; transition: box-shadow 160ms ease, transform 160ms ease; }
 .stat-card:hover, .repository-card:hover { box-shadow: var(--shadow) !important; transform: translateY(-2px); }
@@ -108,19 +109,56 @@ a { color: inherit; }
 .stat-icon svg { font-size: 18px; }
 .profile-stats { display: grid; gap: 2px; }
 .starred-insights { margin-top: 2px !important; }
-.insight-card { height: 100%; border-radius: 14px !important; }
-.insight-card .MuiCardContent-root { min-height: 188px; padding: 20px; }
-.insight-heading { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; color: var(--ink); }
-.insight-heading svg { color: var(--primary); font-size: 20px; }
-.insight-heading .MuiTypography-root { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.02em; }
+.insight-card { position: relative; height: 100%; overflow: hidden; border-radius: 18px !important; background: var(--canvas) !important; transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease; }
+.insight-card::after { position: absolute; right: -32px; bottom: -38px; width: 112px; height: 112px; border: 1px solid currentColor; border-radius: 50%; opacity: 0.1; content: ''; }
+.insight-card:hover { border-color: currentColor !important; box-shadow: var(--shadow) !important; transform: translateY(-3px); }
+.insight-card .MuiCardContent-root { position: relative; z-index: 1; min-height: 198px; padding: 22px; }
+.insight-card-technologies { color: #1976d2; }
+.insight-card-interests { color: #b04a91; }
+.insight-card-recent { color: var(--primary); }
+.insight-heading { display: flex; align-items: center; gap: 11px; margin-bottom: 20px; color: var(--ink); }
+.insight-heading > .MuiBox-root:nth-child(2) { min-width: 0; }
+.insight-heading .MuiTypography-h6 { overflow: hidden; font-size: 0.98rem; font-weight: 700; letter-spacing: -0.02em; text-overflow: ellipsis; white-space: nowrap; }
+.insight-eyebrow { margin-bottom: 3px !important; color: var(--muted) !important; font-size: 0.61rem !important; font-weight: 700 !important; letter-spacing: 0.1em !important; line-height: 1 !important; text-transform: uppercase; }
+.insight-icon { display: grid; width: 38px; height: 38px; flex-shrink: 0; place-items: center; border-radius: 12px; }
+.insight-icon svg { font-size: 21px; }
+.insight-icon-technologies { background: rgba(25, 118, 210, 0.12); color: #1976d2; }
+.insight-icon-interests { background: rgba(176, 74, 145, 0.13); color: #b04a91; }
+.insight-icon-recent { background: rgba(255, 56, 92, 0.12); color: var(--primary); }
+.insight-total { display: grid; width: 28px; height: 28px; margin-left: auto !important; flex-shrink: 0; place-items: center; border: 1px solid currentColor; border-radius: 50%; color: currentColor !important; font-size: 0.7rem !important; font-weight: 700 !important; }
 .insight-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.insight-chips .MuiChip-root { border: 1px solid var(--hairline); background: var(--surface-soft); color: var(--body); font-size: 0.72rem; }
+.insight-chips .MuiChip-root { border: 1px solid currentColor; background: transparent; color: var(--body); font-size: 0.72rem; }
+.insight-card-technologies .insight-chips .MuiChip-root { border-color: rgba(25, 118, 210, 0.25); background: rgba(25, 118, 210, 0.08); }
+.insight-card-interests .insight-chips .MuiChip-root { border-color: rgba(176, 74, 145, 0.25); background: rgba(176, 74, 145, 0.08); }
+.insight-card-recent .insight-chips .MuiChip-root { border-color: rgba(255, 56, 92, 0.25); background: rgba(255, 56, 92, 0.08); }
 .insight-muted { color: var(--muted) !important; font-size: 0.82rem !important; }
 .recent-projects { display: grid; gap: 10px; }
 .recent-project { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--body); font-size: 0.82rem; text-decoration: none; }
 .recent-project:hover { color: var(--primary); }
 .recent-project .MuiTypography-root { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .recent-project svg { flex-shrink: 0; font-size: 16px; }
+
+:root[data-theme='dark'] .insight-card-technologies { border-color: rgba(100, 181, 246, 0.35) !important; background: linear-gradient(145deg, rgba(20, 47, 71, 0.95), rgba(21, 29, 25, 0.98)) !important; }
+:root[data-theme='dark'] .insight-card-interests { border-color: rgba(206, 120, 181, 0.35) !important; background: linear-gradient(145deg, rgba(62, 31, 57, 0.92), rgba(21, 29, 25, 0.98)) !important; }
+:root[data-theme='dark'] .insight-card-recent { border-color: rgba(255, 88, 116, 0.35) !important; background: linear-gradient(145deg, rgba(71, 28, 39, 0.92), rgba(21, 29, 25, 0.98)) !important; }
+
+.recommendations-section { margin-top: 42px; }
+.recommendations-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.recommendations-title { color: var(--ink); font-size: 1.35rem !important; font-weight: 700 !important; letter-spacing: -0.04em; }
+.recommendations-count { color: var(--muted) !important; font-size: 0.8rem !important; }
+.recommendations-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.recommendation-card { position: relative; height: 100%; border: 1px solid var(--hairline) !important; border-radius: 14px !important; background: var(--canvas) !important; box-shadow: none !important; transition: box-shadow 160ms ease, transform 160ms ease; }
+.recommendation-card:hover { box-shadow: var(--shadow) !important; transform: translateY(-2px); }
+.recommendation-card .MuiCardContent-root { min-height: 220px; padding: 20px; }
+.recommendation-card-heading { display: flex; align-items: center; gap: 9px; }
+.recommendation-icon { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 50%; background: rgba(255, 56, 92, 0.1); color: var(--primary); }
+.recommendation-icon svg { font-size: 17px; }
+.recommendation-label { overflow: hidden; color: var(--ink) !important; font-size: 0.85rem !important; font-weight: 700 !important; text-overflow: ellipsis; white-space: nowrap; }
+.recommendation-score { margin-left: auto !important; color: var(--muted) !important; font-size: 0.75rem !important; white-space: nowrap; }
+.recommendation-progress { height: 5px !important; margin-top: 18px; border-radius: 999px; background: var(--surface-strong) !important; }
+.recommendation-progress .MuiLinearProgress-bar { border-radius: inherit; background: var(--primary); }
+.recommendation-copy { margin-top: 18px !important; color: var(--body) !important; font-size: 0.8rem !important; line-height: 1.55 !important; }
+.recommendation-arrow { position: absolute; right: 20px; bottom: 18px; color: var(--muted); font-size: 17px !important; }
 
 .repositories-section, .languages-section { margin-top: 48px; }
 .repositories-heading, .languages-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
@@ -134,6 +172,8 @@ a { color: inherit; }
 .repository-link svg { font-size: 18px; }
 .repository-name { overflow: hidden; margin-top: 20px !important; color: var(--ink); font-size: 1rem !important; font-weight: 700 !important; text-overflow: ellipsis; white-space: nowrap; }
 .repository-description { display: -webkit-box; overflow: hidden; margin-top: 8px !important; color: var(--muted) !important; font-size: 0.84rem !important; line-height: 1.5 !important; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.repository-updated { display: inline-flex; align-items: center; gap: 5px; margin-top: 12px !important; color: var(--muted) !important; font-size: 0.72rem !important; }
+.repository-updated svg { font-size: 15px; }
 .repository-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: auto; padding-top: 18px; }
 .repository-meta .MuiChip-root { max-width: 120px; border: 1px solid var(--hairline); background: var(--surface-soft); color: var(--body); font-size: 0.72rem; }
 .repository-stat { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); font-size: 0.78rem; }
@@ -198,4 +238,6 @@ a { color: inherit; }
   .profile-meta { gap: 1rem !important; overflow-x: auto; padding-bottom: 4px; }
   .repositories-heading, .languages-heading { align-items: flex-start; flex-direction: column; gap: 4px; }
   .language-row-heading { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .recommendations-heading { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .recommendations-grid { grid-template-columns: 1fr; }
 }

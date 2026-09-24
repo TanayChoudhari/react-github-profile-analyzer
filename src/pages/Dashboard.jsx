@@ -18,7 +18,8 @@ import ProfileHeader from '../components/ProfileHeader';
 import ProfileStats from '../components/ProfileStats';
 import RepositoryGrid from '../components/RepositoryGrid';
 import LanguageStats from '../components/LanguageStats';
-import { calculateProfileScore } from '../utils/profileScore.utils'
+import ProfileRecommendations from '../components/ProfileRecommendations';
+import { calculateProfileScore, getProfileScoreBreakdown } from '../utils/profileScore.utils'
   
 export default function Dashboard() {
 	const usernameRef = useRef();
@@ -64,6 +65,14 @@ export default function Dashboard() {
 			setLoading(false)
 		}
 	}
+
+  const scoreData = profile ? {
+    profile,
+    repositories,
+    starredRepositories,
+    languageCount,
+  } : null
+  const scoreBreakdown = scoreData ? getProfileScoreBreakdown(scoreData) : []
 
     return (
       <Box className="dashboard" sx={{ py: { xs: 4, md: 7 } }}>
@@ -138,12 +147,7 @@ export default function Dashboard() {
               <Box id="profile">
                 <ProfileHeader
                   profile={profile}
-                  score={calculateProfileScore({
-                    profile,
-                    repositories,
-                    starredRepositories,
-                    languageCount,
-                  })}
+                  score={calculateProfileScore(scoreData)}
                 />
               </Box>
               <Box className="dashboard-module dashboard-module-stats">
@@ -152,6 +156,9 @@ export default function Dashboard() {
                   starredRepositories={starredRepositories}
                   loading={loading}
                 />
+              </Box>
+              <Box className="dashboard-module dashboard-module-recommendations">
+                <ProfileRecommendations breakdown={scoreBreakdown} />
               </Box>
               <Box id="repositories" className="dashboard-module dashboard-module-repositories">
                 <RepositoryGrid repositories={repositories} loading={loading} />
